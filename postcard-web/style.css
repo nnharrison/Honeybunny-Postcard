@@ -1,0 +1,419 @@
+/* =====================
+   Vintage Postcard Maker
+   style.css
+   ===================== */
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #FAF7F0;
+  --panel-bg: #F2EDE0;
+  --border: rgba(120, 90, 40, 0.22);
+  --border-strong: rgba(120, 90, 40, 0.45);
+  --accent: #8B6914;
+  --accent-light: #FAEEDA;
+  --accent-dark: #6B5010;
+  --text: #2A1F0E;
+  --text-muted: #7A6040;
+  --font-ui: system-ui, -apple-system, sans-serif;
+  --radius: 8px;
+  --radius-lg: 12px;
+}
+
+body {
+  font-family: var(--font-ui);
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+header {
+  padding: 18px 32px 14px;
+  border-bottom: 0.5px solid var(--border);
+  background: #FDF9F0;
+}
+
+header h1 {
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--accent-dark);
+  letter-spacing: 0.02em;
+}
+
+/* Layout */
+.app-wrap {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 24px;
+  padding: 24px 32px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* Panel */
+.panel {
+  background: var(--panel-bg);
+  border: 0.5px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 18px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-self: start;
+}
+
+.panel-title {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.section { display: flex; flex-direction: column; gap: 8px; }
+
+.section-label {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+/* Font buttons */
+.font-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+
+.font-btn {
+  background: #FDF9F0;
+  border: 0.5px solid var(--border);
+  border-radius: var(--radius);
+  padding: 8px 6px;
+  cursor: pointer;
+  text-align: center;
+  font-size: 14px;
+  color: var(--text);
+  transition: border-color 0.15s, background 0.15s;
+}
+.font-btn:hover { border-color: var(--border-strong); }
+.font-btn.active {
+  border: 1.5px solid var(--accent);
+  background: var(--accent-light);
+  color: var(--accent-dark);
+}
+
+/* Color swatches */
+.color-row { display: flex; gap: 8px; flex-wrap: wrap; }
+
+.color-swatch {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: transform 0.12s, border-color 0.12s;
+  outline: 1px solid rgba(0,0,0,0.08);
+}
+.color-swatch:hover { transform: scale(1.12); }
+.color-swatch.active {
+  border-color: var(--accent);
+  transform: scale(1.12);
+}
+
+/* Slot buttons */
+.photo-slot-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+
+.slot-btn {
+  background: #FDF9F0;
+  border: 0.5px solid var(--border);
+  border-radius: var(--radius);
+  padding: 7px 4px;
+  cursor: pointer;
+  font-size: 12px;
+  color: var(--text-muted);
+  font-family: var(--font-ui);
+  transition: border-color 0.15s, background 0.15s;
+}
+.slot-btn:hover { border-color: var(--border-strong); }
+.slot-btn.active {
+  border: 1.5px solid var(--accent);
+  background: var(--accent-light);
+  color: var(--accent-dark);
+}
+
+/* Inputs */
+.text-input,
+.small-input {
+  width: 100%;
+  border: 0.5px solid var(--border);
+  border-radius: var(--radius);
+  background: #FDF9F0;
+  padding: 8px 10px;
+  font-size: 13px;
+  color: var(--text);
+  font-family: var(--font-ui);
+  transition: border-color 0.15s;
+}
+.text-input { resize: vertical; min-height: 64px; }
+.text-input:focus,
+.small-input:focus { outline: none; border-color: var(--accent); }
+
+/* Postcard area */
+.postcard-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.side-toggle {
+  display: flex;
+  gap: 8px;
+}
+
+.side-btn {
+  background: var(--panel-bg);
+  border: 0.5px solid var(--border);
+  border-radius: var(--radius);
+  padding: 7px 20px;
+  cursor: pointer;
+  font-size: 13px;
+  color: var(--text-muted);
+  font-family: var(--font-ui);
+  transition: background 0.15s, border-color 0.15s;
+}
+.side-btn.active {
+  background: var(--accent-light);
+  border: 1px solid var(--accent);
+  color: var(--accent-dark);
+  font-weight: 500;
+}
+
+/* THE POSTCARD */
+.postcard {
+  width: 580px;
+  height: 390px;
+  position: relative;
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid #C9B97A;
+  box-shadow: 3px 4px 0 #C9B97A, 0 2px 12px rgba(120,90,40,0.15);
+}
+
+/* Front */
+.front-side {
+  width: 100%; height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.photo-area {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  background: #D8C89A;
+}
+
+.photo-grid-1 { display: grid; grid-template-columns: 1fr; height: 100%; }
+.photo-grid-2 { display: grid; grid-template-columns: 1fr 1fr; height: 100%; }
+.photo-grid-3 { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; height: 100%; }
+.photo-grid-4 { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; height: 100%; }
+
+.photo-cell {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(120,90,40,0.18);
+  cursor: pointer;
+  background: #C8B880;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s;
+}
+.photo-cell:hover { background: #BCA96E; }
+.photo-cell img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+  pointer-events: none;
+}
+.photo-cell .add-icon {
+  font-size: 26px;
+  color: rgba(100,75,30,0.45);
+  pointer-events: none;
+  user-select: none;
+}
+.photo-cell input[type=file] {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+  width: 100%; height: 100%;
+}
+
+.vintage-overlay {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 3px,
+    rgba(0,0,0,0.012) 3px,
+    rgba(0,0,0,0.012) 4px
+  );
+  pointer-events: none;
+}
+
+.caption-bar {
+  padding: 6px 14px;
+  text-align: center;
+  min-height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.caption-text {
+  font-size: 16px;
+  letter-spacing: 0.05em;
+}
+
+/* Back */
+.back-side {
+  width: 100%; height: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1px 1fr;
+  padding: 20px 18px;
+}
+
+.back-left {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-right: 16px;
+}
+
+.postcard-label {
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  color: rgba(92,61,17,0.5);
+  font-family: 'Special Elite', cursive;
+  text-align: center;
+}
+
+.divider-h { height: 0.5px; background: rgba(92,61,17,0.25); }
+.divider-v { background: rgba(92,61,17,0.25); margin: 0; }
+
+.message-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.back-message {
+  font-size: 12px;
+  line-height: 1.75;
+  white-space: pre-wrap;
+}
+
+.postmark-circle {
+  width: 52px; height: 52px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(92,61,17,0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  align-self: flex-end;
+  font-size: 7px;
+  line-height: 1.4;
+  text-align: center;
+  color: rgba(92,61,17,0.4);
+  font-family: 'Special Elite', cursive;
+}
+
+.postmark-year { font-size: 6px; }
+
+.back-right {
+  padding-left: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.stamp-box {
+  width: 54px; height: 64px;
+  border: 1.5px solid rgba(92,61,17,0.35);
+  border-radius: 3px;
+  align-self: flex-end;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 6px;
+}
+
+.stamp-box span {
+  font-size: 8px;
+  color: rgba(92,61,17,0.4);
+  text-align: center;
+  line-height: 1.4;
+  font-family: 'Special Elite', cursive;
+}
+
+.address-lines {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.addr-line {
+  border-bottom: 0.5px solid rgba(92,61,17,0.35);
+  padding-bottom: 3px;
+  font-size: 12px;
+  color: rgba(80,55,20,0.75);
+  font-family: 'Special Elite', cursive;
+  min-height: 22px;
+}
+
+/* Actions */
+.action-row {
+  display: flex;
+  gap: 10px;
+}
+
+.download-btn {
+  background: var(--accent);
+  border: none;
+  border-radius: var(--radius);
+  padding: 10px 28px;
+  color: #FFF8E7;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  font-family: var(--font-ui);
+  letter-spacing: 0.03em;
+  transition: background 0.15s;
+}
+.download-btn:hover { background: var(--accent-dark); }
+.download-btn:active { transform: scale(0.98); }
+
+/* Responsive */
+@media (max-width: 900px) {
+  .app-wrap {
+    grid-template-columns: 1fr;
+    padding: 16px;
+  }
+  .postcard {
+    width: 100%;
+    max-width: 580px;
+    height: auto;
+    aspect-ratio: 580 / 390;
+  }
+}
